@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMonement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private Movement playerInput;
-    private Movement.PlayerMovementActions playerMovement;
+    public Movement.PlayerMovementActions playerMovement;
     private PlayerMotor motor;
     // Start is called before the first frame update
     private PlayerLook look;

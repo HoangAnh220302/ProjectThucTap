@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private LayerMask mask;
     public PlayerUI playerUI;
 
+    public PlayerMovement inputManager;
+
     private void Start()
     {
         camera = GetComponent<PlayerLook>().camera;
         playerUI = GetComponent<PlayerUI>();
+        inputManager = GetComponent<PlayerMovement>();
     }
     private void Update()
     {
@@ -24,7 +28,12 @@ public class PlayerInteract : MonoBehaviour
         {
             if(hitInfo.collider.GetComponent<Interactable>() != null)
             {
-                playerUI.UpdateText(hitInfo.collider.GetComponent<Interactable>().promtMessage);
+                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                playerUI.UpdateText(interactable.promtMessage);
+                if(inputManager.playerMovement.Interact.triggered)
+                {
+                    interactable.BaseInteract();
+                }
             }
         }
     }
