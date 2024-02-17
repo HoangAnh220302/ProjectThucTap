@@ -62,6 +62,15 @@ public partial class @Movement: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d67e674-2b1a-49ff-a7a0-eee4783e9f45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -161,6 +170,17 @@ public partial class @Movement: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a126b2ad-e87a-46b1-9e88-97fa99a53717"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -691,6 +711,7 @@ public partial class @Movement: IInputActionCollection2, IDisposable
         m_PlayerMovement_Jumper = m_PlayerMovement.FindAction("Jumper", throwIfNotFound: true);
         m_PlayerMovement_Look = m_PlayerMovement.FindAction("Look", throwIfNotFound: true);
         m_PlayerMovement_Interact = m_PlayerMovement.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerMovement_Shoot = m_PlayerMovement.FindAction("Shoot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -768,6 +789,7 @@ public partial class @Movement: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Jumper;
     private readonly InputAction m_PlayerMovement_Look;
     private readonly InputAction m_PlayerMovement_Interact;
+    private readonly InputAction m_PlayerMovement_Shoot;
     public struct PlayerMovementActions
     {
         private @Movement m_Wrapper;
@@ -776,6 +798,7 @@ public partial class @Movement: IInputActionCollection2, IDisposable
         public InputAction @Jumper => m_Wrapper.m_PlayerMovement_Jumper;
         public InputAction @Look => m_Wrapper.m_PlayerMovement_Look;
         public InputAction @Interact => m_Wrapper.m_PlayerMovement_Interact;
+        public InputAction @Shoot => m_Wrapper.m_PlayerMovement_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -797,6 +820,9 @@ public partial class @Movement: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -813,6 +839,9 @@ public partial class @Movement: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -954,6 +983,7 @@ public partial class @Movement: IInputActionCollection2, IDisposable
         void OnJumper(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -7,16 +7,27 @@ public class Enemy : MonoBehaviour
 {
     private StateMachine stateMachine;
     private NavMeshAgent agent;
+    private GameObject player;
+    public Vector3 lastKnownPos;
 
     public NavMeshAgent Agent { get => agent; }
-    [SerializeField] private string currentState;
-
+    public GameObject Player { get => player; }
+    public Vector3 LastKnownPos { get => lastKnownPos; set => lastKnownPos = value; }
     public Path path;
 
-    private GameObject player;
+    
     public float sightDistance = 20f;
     public float fieldOfView = 85f;
     public float eyeHeight;
+    
+    //enemy attack
+    public Transform gunBarrel;
+    public float fireRate;
+    [Range(0.1f,10)]
+
+    [SerializeField] 
+    private string currentState;
+
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
