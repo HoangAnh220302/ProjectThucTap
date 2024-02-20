@@ -55,7 +55,7 @@ public class AttackState : BaseState
         //add force rigidbody of the bullet;
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-3f, 3f), Vector3.up) * shootDirection * 40; //speed
         
-        Debug.Log("Shoot");
+        //Debug.Log("Shoot");
         shootTimer = 0;
     }
     public override void Exit()
